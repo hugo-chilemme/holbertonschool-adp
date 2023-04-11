@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+                <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <title>Nexa : le réseau social ultime</title>
+    
+        <link href="/css-fonts" rel="stylesheet">
+        <link href="/css-init" rel="stylesheet">
+</head>
+<style>
+        /* définition de l'apparence générale de la page */
+        body {
+                height: 100vh;
+        }
+
+        .contains {
+
+                display:grid;
+                grid-template-columns: calc(100% - 400px) 400px;
+        }
+        /* règles appliquées à tous les éléments */
+        * {
+        box-sizing: border-box;
+        font-family: 'Lexend', sans-serif;
+        }
+
+        /* styles appliqués aux liens */
+        a {
+        padding: 10px;
+        font-size: 20px;
+        }
+
+        a:hover {
+        text-decoration: underline;
+        }
+
+
+        .slide-1 {
+                display: grid;
+                width: 100%;
+                height: 100vh;
+                position: absolute;
+                background: white;
+                grid-template-columns: 30% calc(100% - 30% );
+        }
+
+        .slide-2 {
+                display: flex;
+                width: 100%;
+                
+                height: 100vh;
+                background: white;
+        }
+        /* styles pour l'affichage de l'horloge */
+        .clock {
+        display: flex;
+        width: 100%;
+        color: #505050;
+        align-items: center;
+        justify-content: center;
+        }
+
+        h1 {
+        font-weight: 300;
+        font-size: 70px;
+        line-height: 1.5em;
+        }
+
+        /* styles pour les différentes parties du contenu */
+        #clock span {
+        color: #999999;
+        font-size: 45px;
+        }
+
+        .container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        }
+
+        h2  {
+                font-size: 40px;
+                background-image: linear-gradient(90deg, #FC466B, #3F5EFB);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+        }
+
+        .container h3 {
+        color: #404040;
+        display: flex;
+        font-size: 20px;
+        font-family: 'Lexend', sans-serif;
+        margin-top: 25px;
+        font-weight: 400;
+        align-items: center;
+        }
+
+        .container h3 span {
+        display: flex;
+        padding: 7px 10px;
+        border-radius: 5px;
+        margin-right: 7px;
+        background-color: #eee;
+        }
+
+        /* styles pour la liste de liens en bas de page */
+        .lists {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        padding: 40px;
+        }
+
+        .lists span {
+                color: #444;
+                font-size: 14px;
+                display:inline-flex;
+                margin-right: 25px;
+        }
+
+        .lists a {
+        color: #888;
+        font-size: 14px;
+        }
+        .hide {
+                display:none;
+        }
+
+        .commits {
+                display: grid;
+                align-items: center;
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                margin: 50px 70px;
+                display: none;
+                flex-direction: column;
+                grid-template-columns: calc(100% - 130px) 130px;
+        }
+
+        .experience, .message {
+                transition: 1000ms;
+                opacity: 0;
+                width: 1000px;
+                top: 0;
+                position: absolute;
+                bottom: 0;
+                display: flex;
+                justify-content: center;
+        }
+
+        .experience {
+                font-weight: 500;
+                color:#777;
+                font-size: 20px;
+        }
+
+        .commits img {
+                width: 80px;
+                height: 80px;
+                border-radius: 100px;
+                border: 1px solid transparent;
+                border-image: linear-gradient(90deg, #FC466B, #3F5EFB);
+        }
+
+
+
+        .commits div:first-child {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+        }
+
+        .commits div:last-child {
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+        }
+
+        .commits h2 {
+        margin-top: 5px;
+        font-size: 21px;
+        font-weight: 500;
+        text-align: right;
+        }
+
+        .commits h3 {
+                font-size: 14px;
+                color: #777;
+                font-weight: 400;
+        }
+
+        .commits h4 {
+                font-size: 14px;
+                color: #aaa;
+                margin-top: 5px;
+                font-weight: 400;
+        }
+
+        .weather {
+                position: absolute;
+                right: 0;
+                top: 0;
+                padding:40px 50px;
+                color:#505050;
+                display:flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 35px;
+        }
+
+        .weather temperature {
+                font-weight: 300;
+        }
+        .weather i {
+                margin-left: 35px;
+                color:#bba02a
+        }
+        .weather span {
+                font-size: 25px;
+                display:inline-flex;
+                margin-left:5px;
+                font-weight: 300;
+                color:#808080;
+        }
+        @keyframes impact {
+        0% { transform: scale(1); }
+        25% { transform: scale(1.25); }
+        100% { transform: scale(1); }
+        }
+
+        .impact {
+                animation: impact 0.2s 1;
+        }
+
+
+        .maintenance {
+                display:flex;
+                position: fixed;
+                left:0;
+                right: 0;
+                z-index: 10000;
+                bottom: 0;
+                top:0;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                background:white;
+        }
+
+        .maintenance h1 {
+                font-size: 30px;
+                color:#303030;
+        }
+
+        .maintenance h3 {
+                margin-top: 50px;
+                font-size: 15px;
+                color:#606060;
+                font-weight: 400;
+        }
+</style>
+<body>
+
+        <div class="maintenance">
+
+                <h1> Les services sont actuellement en maintenance. </h1>
+
+                <h3> api.v2.version.message "Unable to reach servers" </h3>
+
+        </div>
+        <div class="contains">
+               <div class="slide-1">
+                        <div class="clock">
+                                <h1 id="clock"></h1>
+                        </div>
+                        <div class="container">
+                                <h2 id="supertitle">Les événements seront automatiquement ouverts.</h2>
+                                <h3 style="display:none" id="event_name"></h3>
+                        </div>
+                        <div class="commits">
+
+                                <div>
+                                        <div class="message">
+                                                <h3></h3>
+                                                <h2></h2>
+                                        </div>
+                                        <div class="experience">
+                                               <span></span>
+                                        </div>
+                                </div>
+                                <div>
+                                        <img src="">
+                                </div>
+                        </div>
+                        <div class="weather">
+                                <temperature></temperature><span>°C</span>
+                        </div>
+                        
+                </div>
+                <div class="slide-2">
+                        <p>New commits will appear here soon</p>
+                </div>
+                
+        </div>
+        <div class="lists" id="lists">
+                <span></span>
+                <lists></lists>
+        </div>
+
+
+        <script>
+
+
+                window.location = "/screen";
+                const addZeroDigit = (number) => {
+                        if (number < 10)
+                                return '0' + number;
+                        return number;
+                }
+
+                const plural = (number, string) => {
+                        if(number > 1) return string + 's';
+                        return string;
+                }
+
+                let isScheduled = false;
+                setInterval(async () => {
+                        const date = new Date();
+                        document.querySelector('#clock').innerHTML = `${addZeroDigit(date.getHours())}:${addZeroDigit(date.getMinutes())}<span>${addZeroDigit(date.getSeconds())}</span>`;
+                        const title = document.querySelector('#event_name');
+                        const events = getFutureEvents();
+                        if (events.length > 0)
+                        {
+                                const next = events[0];
+                                const event_date = new Date();
+                                event_date.setHours(next.hour);
+                                event_date.setMinutes(next.minute);
+                                event_date.setSeconds(0);
+                                event_date.setMilliseconds(0);
+
+                                const diff = new Date(event_date.getTime() - date.getTime());
+
+                                let text = `à ${event_date.getHours()}:${event_date.getMinutes()}`;
+                                if (diff.getTime() < (60000 * 60))
+                                {
+                                        const minutes = `${diff.getMinutes()} ${plural(diff.getMinutes(), "minute")}`;
+                                        const secondes = `${diff.getSeconds()} ${plural(diff.getSeconds(), "seconde")}`;
+
+                                        text = `dans ${minutes}`;
+
+                                        if (diff.getMinutes() < 5 && !isScheduled)
+                                        {
+                                                window.open(next.link);
+                                                isScheduled = true;
+                                                setTimeout(async () => isScheduled = false, 300000)
+                                        }
+
+                                        if (diff.getMinutes() === 0) {
+                                                text = `dans ${secondes}`;
+                                        }
+
+                                }
+                                title.style.display = 'inherit';
+                                title.innerHTML = `<span>${next.title}</span> événement prévu ${text}.`;
+                        }
+                        else
+                        {
+                                supertitle.innerHTML = `Bonne après-midi à Holberton Toulouse.`;
+                                title.style.display = 'none';
+                                title.innerText = '';
+                        }
+                }, 250)
+
+                // Définition des horaires et des liens à ouvrir
+                const schedule = [
+                { day: [1], hour: 9, minute: 0, title:"Check-in", link: 'zoommtg://zoom.us/join?confno=83251922994&pwd=QlMwV2J3N2lDbGFmQkdaN0FYalNzZz09' },
+                { day: [1, 2, 3, 4, 5], hour: 11, minute: 30, title: "Speaker Of the Day", link: 'zoommtg://zoom.us/join?confno=84822594283&pwd=eXhPV1BUdVBGU1BXaWVaQllqN0luZz09' },
+                { day: [1, 2, 3, 4, 5], hour: 11, minute: 45, title: "Stand-up", link: 'zoommtg://zoom.us/join?confno=83392530685&pwd=SEdOTUpibVlOTTU0bDFHNEdPVll5QT09' },
+                { day: [5], title:"France Wrap-up", hour: 15, minute: 30, link: 'zoommtg://zoom.us/join?confno=87494744554&pwd=YzJkZ3lvMml3QXpjejRvaWRYaDVtQT09#success' },
+                ];
+
+                for (const event of schedule) {
+                        document.querySelector('#lists lists').innerHTML += `<a target="_blank" href="${event.link}">${event.title}</a>`;
+                        
+                }
+
+
+                const getFutureEvents = () => {
+                        const now = new Date();
+                        let events = [];
+
+                        for (const event of schedule)
+                        {       
+                                if (event.day.includes(now.getDay())) 
+                                {
+                                        if (event.hour >= now.getHours())
+                                        {
+                                                if (event.hour == now.getHours() && event.minute <= now.getMinutes())
+                                                        continue;
+                                                events.push(event);
+                                        }
+
+                                }
+                        }
+                        return events;
+                };
+
+                let client_ip = "";
+
+                let get_ip_routers = [
+                        'https://ip4.seeip.org',
+                        'https://api.ipify.org',
+                        'https://nexa.hugochilemme.com/api/v2/address'
+                ]
+
+                const getAddress = () => {
+                        if (get_ip_routers.length === 0) return alert('Unable to connect to router');
+                        let url = get_ip_routers.pop();
+                        fetch(url)
+                        .then(response => response.text())
+                        .then(ipAddress => {
+                                client_ip = ipAddress
+                                new_commit();
+                                getVersion()
+                        })
+                        .catch(error => getAddress());
+
+                }
+                getAddress();
+
+
+                let commit_id_displayed;
+                const new_commit = async () => {
+                        var xhttp = new XMLHttpRequest();
+                        xhttp.onreadystatechange = function() {
+                                if (this.readyState == 4 && this.status == 200) {
+                                        const commit = JSON.parse(xhttp.responseText);
+                                         
+                                       
+                                        if (commit_id_displayed !== commit.ID && Object.keys(commit).length > 0)
+                                        {
+                                                document.querySelector('.commits').style.display = 'grid';
+                                                document.querySelector('.message').style.opacity = 0;
+                                                document.querySelector('.experience').style.opacity = 1;
+                                                commit_id_displayed = commit.ID;
+                                                document.querySelector('.commits img').setAttribute('src', commit.USER.Avatar)
+                                                document.querySelector('.experience span').innerText = `You didn't win anything`;
+                                                document.querySelector('.experience span').style.color = '#888888';
+                                                document.querySelector('.experience span').style.fontSize = '20px';
+
+                                                setTimeout(() => {
+                                                        const XP = commit.XP;
+                                                        let num = 0;
+
+                                                        const loop = async () => {
+                                                                if (XP > 0 && XP >= num) {
+                                                                        document.querySelector('.experience span').innerText = `Earned ${num} XP`;
+                                                                        document.querySelector('.experience span').style.color = '#2DA13F';
+                                                                        num += 1;
+                                                                        if (num % 10 === 0) {
+                                                                                document.querySelector('.experience span').classList.add('impact');
+                                                                                setTimeout(() => {
+                                                                                        document.querySelector('.experience span').classList.remove('impact');
+                                                                                }, 200);
+                                                                        }
+                                                                        setTimeout(loop, 3500 / XP);
+                                                                } else if (XP < 0 && XP <= num) {
+                                                                        document.querySelector('.experience span').innerText = `Unrewarded ${num} XP`;
+                                                                        document.querySelector('.experience span').style.color = '#E33F3F';
+                                                                        num -= 1;
+                                                                        setTimeout(loop, 3500 / XP * -1);
+                                                                }
+                                                        };
+                                                        loop()
+
+
+                                                       
+                                                        document.querySelector('.commits h2').innerText = commit.TITLE.replaceAll('<br>', '');
+                                                        document.querySelector('.commits h3').innerText = `${commit.USER.Pseudo.split(' ')[0]} - Cohort ${commit.USER.Session}`;
+                                                        setTimeout(() => {
+                                                                document.querySelector('.message').style.opacity = 1;
+                                                                document.querySelector('.experience').style.opacity = 0;
+                                                                
+                                                        }, 5000)
+                                                }, 1000)
+     
+      
+                                        }
+                                        
+                                       
+                                }
+                                
+                        };
+                        xhttp.open("GET", "https://nexa.hugochilemme.com/api/v2/commits?route_client="+client_ip, true);
+                        xhttp.send();
+
+                        setTimeout(() => {
+                                new_commit();
+                        }, 10000)
+                        
+                }
+                
+
+
+
+                const getWeather = async () => {
+
+
+
+                        const API_URL = `https://api.open-meteo.com/v1/forecast?latitude=43.6045&longitude=1.4440&current_weather=true`;
+                        fetch(API_URL, {})
+                        .then(response => response.json())
+                        .then(data => {
+                                document.querySelector('temperature').innerText = data.current_weather.temperature
+                        })
+                        .catch(error => console.error(error));
+                        setTimeout(() => getWeather(), 60000)
+                }
+                getWeather()
+
+
+                let version_route;
+                const getVersion = async () => {
+                        var xhttp = new XMLHttpRequest();
+                        xhttp.onreadystatechange = function() {
+                                if (this.readyState == 4 && this.status == 200) {
+                                        const version = JSON.parse(xhttp.responseText);
+                                        if (version_route && version_route != version.version)
+                                                location.reload()
+                                        version_route = version.version;
+                                        document.querySelector('#lists span').innerHTML = version_route;
+                                }
+                                
+                        };
+                        xhttp.open("GET", "https://nexa.hugochilemme.com/api/v2/version?route_client="+client_ip+"&route_version="+version_route, true);
+                        xhttp.send();
+
+                        setTimeout(() => getVersion(), 10000);
+                }
+               
+
+
+                // const slide = () => {
+                //         const s1 = document.querySelector('.slide-1');
+                //         const s2 = document.querySelector('.slide-2');
+
+                //         s1.classList.remove('hide');
+                //         s2.classList.add('hide');
+                //         setTimeout(() => {
+                //                 s1.classList.add('hide');
+                //                 s2.classList.remove('hide');
+                //                 setTimeout(() => slide(), 15000)
+                //         }, 15000)
+                // }
+                // slide();
+        </script>
+</body>
