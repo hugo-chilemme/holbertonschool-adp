@@ -1,0 +1,16 @@
+footer {
+    display: flex;
+    height: 50px;
+    padding: 0 2.5rem;
+    font-size: 14px;
+}
+
+footer text-version {
+    color: #505050;
+    padding: 0 20px;
+}
+
+footer #events a {
+    color:#aaa;
+    padding: 0 20px;
+}

@@ -1,0 +1,85 @@
+section.commits {
+    position: fixed;
+    bottom: 45px;
+    right: 55px;
+    display: flex;
+    width: 600px;
+    transition: 500ms;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+
+section.commits .commit {
+    display: grid;
+    grid-template-columns: 60px 70px calc(100% - 110px);
+    align-items: center;
+    background:#f6f6f6;
+    padding:15px 45px 15px 25px;
+    margin-top:10px;
+    border-radius: 10px;
+    justify-items: start;
+    animation: 500ms;
+}
+
+section.commits accountexperience {
+    margin-left: 10px;
+}
+
+section.commits .commit .rank h3 {
+    font-size: 18px;
+    color:#909090;
+    font-weight: 300;
+}
+
+section.commits .commit div:nth-child(3) {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+section.commits .commit div:nth-child(4) {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    line-height: 1.5em;
+    width: 100%;
+    align-items: flex-end;
+}
+
+section.commits .commit div:nth-child(4) h3 {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+section.commits .commit .about {
+    display: flex;
+    justify-content: space-between;
+}
+
+section.commits .commit img {
+    width: 50px;
+    height: 50px;
+    border-radius: 100px;
+}
+
+section.commits .commit h3 {
+    color: #808080;
+    font-size: 14px;
+    font-weight: 400;
+    
+}
+
+section.commits .commit h2 {
+    color: #303030;
+    font-size: 17px;
+    margin-top: 5px;
+    line-height: 1.5em;
+    font-weight: 500;
+
+    background-image: linear-gradient(90deg, #FC466B, #3F5EFB);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}

@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <title> </title>
+
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+
+
+        <link rel="stylesheet" href="./assets/common.css">
+        <link rel="stylesheet" href="./assets/header.css">
+        <link rel="stylesheet" href="./assets/contains.css">
+        <link rel="stylesheet" href="./assets/commits.css">
+        <link rel="stylesheet" href="./assets/footer.css">
+    </head>
+    <body>
+
+        <header>
+
+            <h1 class="clock"> <data id="clock"></data> </h1>
+
+            <h1 class="weather"> <data id="weather"></data> <span>°C</span> </h1>
+
+        </header>
+
+        <aside>
+
+            <h1> Excellente après-midi à Holberton School Toulouse </h1>
+
+            <h3 id="schedule"> Loading </h3>
+
+        </aside>
+
+        <section class="commits">
+
+
+        </section>
+
+        <footer>
+
+            <text-version> </text-version>
+            <div id="events">
+
+            </div>
+        </footer>
+
+    </body>
+    <footer>
+
+        <script>
+
+            const d = document;
+            const schedule = [
+
+                // Recurring event
+
+                { day: [1], hour: 9, minute: 0, title:"Check-in", link: 'zoommtg://zoom.us/join?confno=83251922994&pwd=QlMwV2J3N2lDbGFmQkdaN0FYalNzZz09' },
+
+                { day: [1, 2, 3, 4, 5], hour: 20, minute: 59, title: "Speaker Of the Day", link: 'zoommtg://zoom.us/join?confno=84822594283&pwd=eXhPV1BUdVBGU1BXaWVaQllqN0luZz09' },
+
+                { day: [1, 2, 3, 4, 5], hour: 11, minute: 45, title: "Stand-up", link: 'zoommtg://zoom.us/join?confno=83392530685&pwd=SEdOTUpibVlOTTU0bDFHNEdPVll5QT09' },
+
+                { day: [5], title: "France Wrap-up", hour: 15, minute: 30, link: 'zoommtg://zoom.us/join?confno=87494744554&pwd=YzJkZ3lvMml3QXpjejRvaWRYaDVtQT09' },
+
+
+                // Temporary event
+
+                { day: [3], title: "Live coding session Lille", hour: 14, minute: 45, link: "zoommtg://zoom.us/join?confno=83651285716"}
+
+            ];
+
+
+            const event = {
+
+                nexts: () => {
+
+                    const now = new Date();
+                    let events = [];
+
+                    for (const event of schedule)
+                    {       
+
+                        if ( event.day.includes( now.getDay() ) && event.hour >= now.getHours() ) 
+                        {
+
+                            if (event.hour == now.getHours() && event.minute <= now.getMinutes())
+                            {
+
+                                continue;
+
+                            }
+
+                            events.push(event);
+
+                        }
+
+                    }
+                    return events;
+
+                },
+
+                next: () => event.nexts()[0],
+
+            }
+
+
+            const screen = {
+
+                version: undefined,
+
+                update: {
+
+                    clock: (h, m, s) => d.querySelector('#clock').innerHTML = `${h}:${m}<span>${s}</span>`,
+
+                    weather: (temperature) => d.querySelector('#weather').innerText = temperature,
+
+                    version: (version) => d.querySelector('text-version').innerText = version,
+
+                    event: (title, diff) => {
+
+                        const plural = (number, word) => number > 1 ? word + "s" : word; 
+                        const ONE_HOUR = (60000 * 60);
+                        const nodeshedule = d.querySelector('#schedule');
+                        
+                        if ( diff < ONE_HOUR )
+                        {
+
+                            const min = diff.getMinutes();
+                            const sec = diff.getSeconds();
+
+                            let text = `dans ${min} ${plural(min, "minute")}`;
+                            if ( min === 0 )
+                            {
+
+                                text = `dans ${sec} ${plural(sec, "seconde")}`;
+
+                            }
+
+                            nodeshedule.innerHTML = `<strong>${title}</strong> événement prévu ${text}`;
+                        }
+                        else
+                        {
+
+                            nodeshedule.innerText = "No event scheduled for today";
+
+                        }
+
+
+
+                    },
+
+                    commit: (commit) => {
+
+                        const commits = d.querySelector('.commits');
+                        commits.style.opacity = 0;
+
+                        let XP_USER = commit.XP_BEFORE;
+
+                        const about = `${commit.USER.Pseudo.split(' ')[0]} - Cohort ${commit.USER.Session}`;
+                        const title = commit.TITLE
+                        
+                        let html = "";
+                        html += ' <div class="commit"> ';
+                        html += ' <div class="rank"> <h3> # ' + commit.USER.Rank + ' </h3></div>'
+                        html += ' <div> <img src="' + commit.USER.Avatar + '"> </div> ';
+                        html += ' <div> <div class="about"> <h3> ' + about + ' </h3> <h3> <experience>0 XP</experience> <accountexperience>' + XP_USER + ' XP</accountexperience></h3>  </div> <h2> ' + title + ' </h2> </div> ';
+                        html == ' </div> ';
+
+
+                        setTimeout(() => {
+                            commits.style.opacity = 1;
+                            commits.innerHTML = html;
+
+                            const experience = d.querySelector('.commit experience');
+                            const accountexperience = d.querySelector('accountexperience');
+
+                            setTimeout(() => {
+                                const XP = commit.XP;
+
+                                let num = 0;
+
+                                const loop = async () => {
+                                    if (XP > 0 && XP >= num) {
+                                            experience.innerText = `+${num} XP`;
+                                            accountexperience.innerText = `${XP_USER + num} XP`;
+                                            experience.style.color = '#2DA13F';
+                                            num += 1;
+                                            setTimeout(loop, 40);
+                                    } else if (XP < 0 && XP <= num) {
+                                            experience.innerText = `${num} XP`;
+                                            accountexperience.innerText = `${XP_USER + num} XP`;
+                                            experience.style.color = '#E33F3F';
+                                            num -= 1;
+                                            setTimeout(loop, 40);
+                                    }
+                                };
+                                loop()
+                            }, 500)
+
+                            setTimeout(() => api('commits/'+ commit.ID + "/setDisplayed"), 5000)
+                        }, 500)
+
+                        
+                    }
+
+                },
+
+            }
+
+
+
+            const api = (event, callback = () => { }) => {
+
+                const xhttp = new XMLHttpRequest();
+
+                xhttp.onreadystatechange = function() {
+
+                    if (this.readyState == 4 && this.status == 200) {
+
+                        console.debug(`api  <= /v2/${event}`);
+
+                        callback( JSON.parse( xhttp.responseText ) );
+
+                    }
+                }
+
+                xhttp.open('GET', 'https://nexa.hugochilemme.com/api/v2/'+event, true);
+                xhttp.send();
+
+            }
+
+            
+            let last_commit;
+            async function handleScreen () {
+
+                api('commits?limit=1', (commits) => {
+
+                    if (commits.length > 0) 
+                    {
+                        const commit = commits[0];
+                        if (!last_commit || last_commit != commit.ID)
+                        {
+
+                            screen.update.commit(commit);
+                            last_commit = commit.ID;
+
+                        }
+               
+
+                    }
+
+                } )
+
+                setTimeout(() => handleScreen(), 15000);
+
+            }
+
+            let isScheduled = false;
+            async function handleClock () {
+
+
+                const addDigit = (number) => number < 10 ? "0" + number : number;
+                
+
+                const date = new Date();
+
+                const hours = addDigit( date.getHours() );
+                const minutes = addDigit( date.getMinutes() );
+                const seconds = addDigit( date.getSeconds() );
+
+                screen.update.clock(hours, minutes, seconds);
+
+
+
+                handleNextEvent();
+
+            }
+
+            const handleNextEvent = () => {
+
+                const ev = event.next();
+                const date = new Date();
+
+
+                if ( !ev ) return;
+
+                const event_date = new Date();
+                event_date.setHours(ev.hour);
+                event_date.setMinutes(ev.minute);
+                event_date.setSeconds(0);
+                event_date.setMilliseconds(0);
+
+                const diff = new Date(event_date.getTime() - date.getTime());
+
+                
+                screen.update.event(ev.title, diff);
+
+                const ONE_HOUR = (60000 * 60);
+
+                if ( diff.getTime() < ONE_HOUR)
+                {
+
+                    if (diff.getMinutes() < 5 && !isScheduled)
+                    {
+
+                        window.open(ev.link);
+                        isScheduled = true;
+                        setTimeout(async () => isScheduled = false, 300000)
+
+                    }
+
+                }
+            }
+
+
+            async function handleLow () {
+
+                api('weather', (weather) => screen.update.weather( weather.temperature ) )
+
+                api('version', function (status) {
+
+                    if (screen.version && screen.version != status.version) 
+                    {
+
+                        location.reload()
+
+                    }
+
+                    screen.version = status.version
+
+                    screen.update.version( screen.version );
+
+                } )
+
+
+                setTimeout(() => handleLow(), 60000)
+
+            }
+
+
+            async function initializeEvent () {
+
+                const events = d.querySelector('#events');
+
+                for (const event of schedule)
+                {
+
+                    const { title, link } = event;
+
+                    events.innerHTML += `<a href="${link}" target="_blanl">${title}</a>`;
+
+                }
+            }
+
+            handleScreen();
+            handleLow();
+            initializeEvent();
+            setInterval(() => handleClock(), 500);
+            
+
+        </script>
+
+    </footer>
+</html>

@@ -1,0 +1,33 @@
+aside {
+    display:flex;
+    z-index: 10000;
+    height: calc(100vh - 150px);
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background:white;
+}
+
+aside h1 {
+        font-size: 30px;
+        color:#303030;
+        font-weight: 500;
+
+        background-image: linear-gradient(90deg, #FC466B, #3F5EFB);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+}
+
+
+aside h3 {
+        margin-top: 50px;
+        font-size: 15px;
+        color:#606060;
+        font-weight: 400;
+}
+
+aside img {
+    width: 400px;
+    margin-bottom: 50px;
+}
