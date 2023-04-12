@@ -1,33 +1,181 @@
-aside {
+.contains {
     display:flex;
-    z-index: 10000;
-    height: calc(100vh - 150px);
-    width: 100%;
     flex-direction: column;
-    justify-content: center;
+    width: calc(100% - 100px);
+    height: 100vh;
+    padding: 0 5em 0 7.5em;
+}
+.contains header {
+    display:flex;
+    height: 100px;
+    width: 100%;
+}
+.contains header .menu {
+    width: 60%;
+    display: flex;
     align-items: center;
-    background:white;
+    color:#aaa; 
+    font-size: 14px;
 }
 
-aside h1 {
-        font-size: 30px;
-        color:#303030;
-        font-weight: 500;
+.contains header .menu version-text, .contains header .menu a {
+    padding:0 20px;
+}
 
-        background-image: linear-gradient(90deg, #FC466B, #3F5EFB);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+.contains header .menu a {
+    color:#666666; 
+    font-size: 14px;
 }
 
 
-aside h3 {
-        margin-top: 50px;
-        font-size: 15px;
-        color:#606060;
-        font-weight: 400;
+.contains header .right {
+    width: 40%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }
 
-aside img {
-    width: 400px;
-    margin-bottom: 50px;
+.contains header .weather {
+    font-size: 30px;
+    font-weight: 400;
+    color:#eee
+}
+
+.contains header .weather celcus {
+    color:#777777
+}
+
+.contains .committers {
+    display: flex;
+    height: calc(100vh - 100px);
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.contains .committers .current-comitter {
+    width: 40%;
+    height: calc(100vh - 100px);
+    display:flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.contains .committers .current-comitter h1 {
+    color: #fff;
+    font-weight: 500;
+    line-height: 1.5em;
+    transition: opacity 500ms;
+    display: flex;
+    font-size: 45px;
+    align-items: flex-end;
+}
+
+.contains .committers .current-comitter h3 {
+    color: #888;
+    font-weight: 400;
+    font-size: 18px;
+    display: flex;
+    width: 60%;
+    align-items: center;
+}
+
+.contains .committers .current-comitter h3 author {
+    color:#fff;
+    font-weight: 500;
+    margin-left: 5px;
+}
+
+.contains .committers .current-comitter img {
+    width: 40px;
+    height: 40px;
+    display:inline-flex;
+    margin-right: 25px;
+    border-radius: 100px;
+}
+
+.contains .committers .current-comitter .about-committer {
+    display:flex;
+    margin-top: 50px;
+    align-items: center;
+}
+
+.contains .committers .current-comitter .about-committer .experience-comitter {
+    display: flex;
+    width: 40%;
+    align-items: center;
+    justify-content: flex-end;
+}
+.contains .committers .current-comitter .about-committer .experience-comitter span {
+    padding: 5px 10px;
+    background: #258133;
+    border-radius: 100px;
+    color:#fff;
+}
+
+.contains .committers .current-comitter .about-committer .experience-comitter span i {
+    transform:translateY(2px)
+}
+
+.contains .committers .scoreboard {
+    background: #292929;
+    width: calc(50% - 200px);
+    height: calc(100% - 150px);
+    display: flex;
+    margin: 100px;
+    padding: 50px;
+    border-radius: 20px;
+    overflow: hidden;
+    flex-direction: column;
+}
+
+.contains .committers .scoreboard .item {
+    display: flex;
+    align-items: center;
+    padding-bottom: 25px;
+    margin-bottom: 25px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.025)
+}
+.contains .committers .scoreboard .item:last-child {
+    border-bottom: 2px solid transparent;
+}
+.contains .committers .scoreboard .item .about {
+    width: calc(100% - 85px - 85px)
+}
+
+.contains .committers .scoreboard .item .right {
+    width: 85px;
+    display:flex;
+    justify-content: right;
+}
+
+.contains .committers .scoreboard .item .right span {
+    padding: 5px 10px;
+    background: #393939;
+    border-radius: 100px;
+    font-size: 15px;
+    color:#ccc;
+}
+
+.contains .committers .scoreboard .item .right span i {
+    transform:translateY(2px)
+}
+
+.contains .committers .scoreboard .item h3 {
+    color:#fff;
+    font-weight: 400;
+}
+.contains .committers .scoreboard .item h4 {
+    color:#777777;
+    font-weight: 400;
+    margin-top: 5px;
+    font-size: 15px;
+}
+
+.contains .committers .scoreboard .item img {
+    width: 50px;
+    height: 50px;
+    border-radius: 100px;
+}
+.contains .committers .scoreboard .item .picture {
+    width: 85px;
 }

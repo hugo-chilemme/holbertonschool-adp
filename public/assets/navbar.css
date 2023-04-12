@@ -1,0 +1,16 @@
+header.navbar {
+
+    display: flex;
+    width: 100px;
+    height: 100vh;
+
+    justify-content: center;
+    align-items: center;
+    
+    background-color: #292929;
+}
+
+header.navbar i {
+    color:#666;
+    font-size: 30px
+}

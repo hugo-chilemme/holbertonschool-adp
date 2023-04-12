@@ -3,7 +3,7 @@ section.commits {
     bottom: 45px;
     right: 55px;
     display: flex;
-    width: 600px;
+    width: 650px;
     transition: 500ms;
     flex-direction: column;
     justify-content: flex-end;
@@ -12,10 +12,10 @@ section.commits {
 
 section.commits .commit {
     display: grid;
-    grid-template-columns: 60px 70px calc(100% - 110px);
+    grid-template-columns: 80px 70px calc(100% - 130px);
     align-items: center;
     background:#f6f6f6;
-    padding:15px 45px 15px 25px;
+    padding:20px 55px 20px 25px;
     margin-top:10px;
     border-radius: 10px;
     justify-items: start;
@@ -27,7 +27,7 @@ section.commits accountexperience {
 }
 
 section.commits .commit .rank h3 {
-    font-size: 18px;
+    font-size: 20px;
     color:#909090;
     font-weight: 300;
 }
@@ -50,7 +50,7 @@ section.commits .commit div:nth-child(4) {
 }
 
 section.commits .commit div:nth-child(4) h3 {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 500;
 }
 
@@ -74,7 +74,7 @@ section.commits .commit h3 {
 
 section.commits .commit h2 {
     color: #303030;
-    font-size: 17px;
+    font-size: 19px;
     margin-top: 5px;
     line-height: 1.5em;
     font-weight: 500;
