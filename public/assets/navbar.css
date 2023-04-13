@@ -3,14 +3,31 @@ header.navbar {
     display: flex;
     width: 100px;
     height: 100vh;
-
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     
-    background-color: #292929;
+    background-color: var(--card-background-color);
 }
 
 header.navbar i {
-    color:#666;
-    font-size: 30px
+    color: var(--label-color);
+    font-size: 30px;
+    width: 100px;
+    height: 100px;
+    display: inline-flex;
+    border: 2px solid transparent;
+    align-items: center;
+    justify-content: center;
+    transition: 150ms;
+}
+
+header.navbar i:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+header.navbar i.active {
+    color:var(--title-color);
+    background: rgba(255, 255, 255, 0.025);
+    border-left:2px solid var(--title-color)
 }

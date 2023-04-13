@@ -14,6 +14,7 @@
 
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
+    <link rel="stylesheet" href="./assets/router.css">
     <link rel="stylesheet" href="./assets/common.css">
     <link rel="stylesheet" href="./assets/navbar.css">
     <link rel="stylesheet" href="./assets/contains.css">
@@ -24,8 +25,10 @@
 
         <header class="navbar">
 
-            <i class='bx bx-home-alt-2' ></i>
-
+            <i class='bx bx-home-alt-2 active' ></i>
+            <i class='bx bx-calendar-event'></i>
+            <i class='bx bx-git-commit' ></i>
+            
         </header>
 
         <aside class="contains">
@@ -33,6 +36,10 @@
             <header>
 
                 <div class="menu">
+                    <span class="theme">
+                        <i class='moon bx bx-moon' ></i>
+                        <i class='sun bx bxs-sun hide' ></i>
+                    </span>
                     <version-text> </version-text>
                     <div class="lists">
 
@@ -41,7 +48,7 @@
 
                 <div class="right">
                     <span class="weather">
-                        <value>9.3</value> <celcus>°C</celcus>
+                        <value>-</value> <celcus>°C</celcus>
                     </span>
                 </div>
 
@@ -50,15 +57,15 @@
             <section class="committers">
 
                 <div class="current-comitter unshow">
-
+                    <h5>from <repo> </repo> </h5>
                     <h1> </h1>
                     <div class="about-committer">
-                        <h3> <img src=""> Published by <author> </author> </h3>
+                        <h3> <img src=""> Committed by <author> </author> </h3>
                         <div class="experience-comitter">
                             <span><i id="icon" class='bx bx-chevron-up'></i> <value></value></span>
                         </div>
                     </div>
-                </div>
+                </div> 
 
                 <div class="scoreboard">
 
@@ -73,8 +80,13 @@
 
 </body>
 <footer>
-
+    <script src="./apps/restapi.js"></script>
+    <script src="./apps/screen.js"></script>
+    <script src="./apps/event.js"></script>
     <script>
+
+            
+
 
             const d = document;
             const schedule = [
@@ -94,241 +106,62 @@
 
 
             ];
+    
+
+            d.querySelector('.moon').addEventListener('click', () => {
+                d.querySelector('.moon').classList.add('hide');
+                d.querySelector('.sun').classList.remove('hide');
+                d.querySelector('html').classList.add('dark-theme')
+            })
+
+            d.querySelector('.sun').addEventListener('click', () => {
+                d.querySelector('.sun').classList.add('hide');
+                d.querySelector('.moon').classList.remove('hide');
+                d.querySelector('html').classList.remove('dark-theme')
+            })
 
-
-            const event = {
-
-                nexts: () => {
-
-                    const now = new Date();
-                    let events = [];
-
-                    for (const event of schedule)
-                    {       
-
-                        if ( event.day.includes( now.getDay() ) && event.hour >= now.getHours() ) 
-                        {
-
-                            if (event.hour == now.getHours() && event.minute <= now.getMinutes())
-                            {
-
-                                continue;
-
-                            }
-
-                            events.push(event);
-
-                        }
-
-                    }
-                    return events;
-
-                },
-
-                next: () => event.nexts()[0],
-
-            }
-
-
-            const screen = {
-
-                version: undefined,
-
-                update: {
-
-                    // clock: (h, m, s) => d.querySelector('#clock').innerHTML = `${h}:${m}<span>${s}</span>`,
-
-                    weather: (temperature) => d.querySelector('.weather value').innerText = temperature,
-
-                    version: (version) => d.querySelector('version-text').innerText = version,
-
-                    event: (title, diff) => {
-
-                        const plural = (number, word) => number > 1 ? word + "s" : word; 
-                        const ONE_HOUR = (60000 * 60);
-                        
-                        if ( diff < ONE_HOUR )
-                        {
-
-                            const min = diff.getMinutes();
-                            const sec = diff.getSeconds();
-
-                            let text = `dans ${min} ${plural(min, "minute")}`;
-                            if ( min === 0 )
-                            {
-
-                                text = `dans ${sec} ${plural(sec, "seconde")}`;
-
-                            }
-                            console.log(text)
-                        }
-
-
-
-                    },
-
-                    commit: (commit) => {
-
-
-
-                        const exp_div = d.querySelector('.current-comitter .experience-comitter span');
-                        const exp_val = d.querySelector('.current-comitter .experience-comitter span value');
-                        const exp_ico = d.querySelector('.current-comitter .experience-comitter span #icon');
-
-                        d.querySelector('.current-comitter h1').style.opacity = 0;
-                        
-                        exp_div.style.background = "#292929";
-                        exp_val.innerText = "0";
-                        exp_ico.classList.add('bx-chevron-up')
-                        exp_ico.classList.remove('bx-chevron-down')
-
-
-                        setTimeout(() => {
-
-                           
-                            d.querySelector('.current-comitter').classList.remove('unshow');
-                            d.querySelector('.current-comitter h1').innerText = commit.TITLE.substring(0, 72);
-                            d.querySelector('.current-comitter .about-committer author').innerText = commit.USER.Pseudo.split(' ')[0]
-                            d.querySelector('.current-comitter .about-committer img').src = commit.USER.Avatar;
-                            d.querySelector('.current-comitter h1').style.opacity = 1;
-
-                            let scoreboard;
-                            if ( d.querySelector('[scoreboard-id="'+commit.USER_ID+'"]') )
-                                scoreboard = d.querySelector('[scoreboard-id="'+commit.USER_ID+'"] .right span');
-
-                            const XP_USER = scoreboard ? parseInt(scoreboard.innerText) : 0;
-
-
-                            setTimeout(() => {
-                                const XP = commit.XP;
-
-                                let num = 0;
-
-                                const loop = async () => {
-                                    if ( d.querySelector('[scoreboard-id="'+commit.USER_ID+'"]') )
-                                        scoreboard = d.querySelector('[scoreboard-id="'+commit.USER_ID+'"] .right span');
-                                    
-                                    if (XP > 0 && XP >= num) {
-                                            exp_val.innerText = `${num}`;
-                                            exp_div.style.background = '#2DA13F';
-                                            if (scoreboard)
-                                                scoreboard.querySelector('xp').innerText = `${XP_USER + num}`;
-
-                                            if ( exp_ico.classList.contains('bx-chevron-down') )
-                                            {
-                                                exp_ico.classList.remove('bx-chevron-down')
-                                                exp_ico.classList.add('bx-chevron-up')
-                                            }
-                                            num += 1;
-                                            setTimeout(loop, 40);
-                                    } else if (XP < 0 && XP <= num) {
-                                            exp_val.innerText = `${num}`;
-                                            exp_div.style.background = '#E33F3F';
-                                            if (scoreboard)
-                                                scoreboard.querySelector('xp').innerText = `${XP_USER + num}`;
-
-                                            if ( exp_ico.classList.contains('bx-chevron-up') )
-                                            {
-                                                exp_ico.classList.remove('bx-chevron-up')
-                                                exp_ico.classList.add('bx-chevron-down')
-                                            }
-
-                                            num -= 1;
-                                            setTimeout(loop, 40);
-                                    }
-
-                                    for (let i = 0; i < screen.scoreboard.length; i++)
-                                        if (screen.scoreboard[i].Login == commit.USER_ID)
-                                        {
-                                            screen.scoreboard[i].Experience = XP_USER + num;
-                                            screen.update.scoreboard(screen.scoreboard);
-                                            break;
-                                        }
-                                };
-                                loop()
-                            }, 500)
-
-                            setTimeout(() => {
-                                api('commits/'+ commit.ID + "/setDisplayed");
-                                if (scoreboard)
-                                    scoreboard.style.background = "#393939";
-                            }, 5000)
-                        }, 500)
-
-                        
-                    },
-
-                    scoreboard: (scoreboard) => {
-
-                        scoreboard.sort((a, b) => b.Experience - a.Experience);
-                        screen.scoreboard = scoreboard
-                        const sb = d.querySelector('.scoreboard');
-                        const items = sb.querySelectorAll('.item');
-                        for (let i = 0; i < (scoreboard.length < 6 ? scoreboard.length : 6); i++)
-                        {
-                            const user = scoreboard[i];
-                            if (items[i])
-                            {
-                                items[i].querySelector('xp').innerText = user.Experience;
-                                if (items[i].getAttribute('scoreboard-id') !== user.Login)
-                                {
-                                    items[i].querySelector('img').src = user.Avatar;
-                                    items[i].querySelector('h3').innerText = user.Pseudo.split(' ')[0];
-                                    items[i].querySelector('h4').innerText = ' Cohort ' + user.Session;
-                                    items[i].setAttribute('scoreboard-id', user.Login);
-                                }
-                                continue;
-                            }
-                            let html = "";
-                            html += ' <div class="item" scoreboard-id="'+ user.Login +'"> ';
-                            html += '    <div class="picture"> <img src="' + user.Avatar + '"> </div> ';
-                            html += '    <div class="about"> <h3> ' + user.Pseudo.split(' ')[0] + '</h3>  <h4>Cohort ' + user.Session + '</h4> </div> ';
-                            html += '    <div class="right">  <span> <i class="bx bx-chevron-up" ></i> <xp>' + user.Experience + '</xp></span> </div> ';
-                            html += ' </div> ';
-
-                            sb.innerHTML += html;
-                        }
-                    }
-
-                },
-
-                
-
-            }
-
-            const api = (event, callback = () => { }) => {
-
-                const xhttp = new XMLHttpRequest();
-
-                xhttp.onreadystatechange = function() {
-
-                    if (this.readyState == 4 && this.status == 200) {
-
-                        console.debug(`api  <= /v2/${event}`);
-
-                        callback( JSON.parse( xhttp.responseText ) );
-
-                    }
-                }
-
-                xhttp.open('GET', 'https://nexa.hugochilemme.com/api/v2/'+event, true);
-                xhttp.send();
-
-             }
 
 
             let last_commit;
             async function handleScreen () {
 
-                api('commits?limit=1', (commits) => {
-
+                api('commits/pending?limit=1', (request) => {
+                    const commits = request.results;
                     if (commits.length > 0) 
                     {
                         const commit = commits[0];
                         if (!last_commit || last_commit != commit.ID)
                         {
 
-                            screen.update.commit(commit);
+                            const xpTotal = commit.XP;
+                            screen.update.commit.count(0);
+                            screen.update.commit.element(commit)
+
+
+                            function updateExperienceCount() {
+                                let xpCount = 0;
+
+                                const increment = xpTotal > 0 ? 1 : -1;
+
+                                function updateScreen() {
+                                    screen.update.commit.count(xpCount);
+                                }
+
+                                function animate() {
+                                    xpCount += increment;
+                                    updateScreen();
+                                    if (xpCount !== xpTotal) {
+                                        setTimeout(animate, 50);
+                                    }
+                                }
+
+                                setTimeout(() => animate(), 1000)
+                            }
+                            if (xpTotal != 0)
+                                updateExperienceCount()
+
+                            setTimeout(() => api('commits/displayed/'+ commit.ID), 5000)
+                            
                             last_commit = commit.ID;
 
                         }
@@ -337,8 +170,8 @@
                     }
 
                 } )
-                api('scoreboard', (scoreboard) => {                  
-                    screen.scoreboard = scoreboard
+                api('users/scoreboard', (request) => {                  
+                    screen.scoreboard = request.results
                     screen.update.scoreboard(screen.scoreboard);
 
                 } )
@@ -348,25 +181,6 @@
             }
 
             let isScheduled = false;
-            async function handleClock () {
-
-
-                const addDigit = (number) => number < 10 ? "0" + number : number;
-
-
-                const date = new Date();
-
-                const hours = addDigit( date.getHours() );
-                const minutes = addDigit( date.getMinutes() );
-                const seconds = addDigit( date.getSeconds() );
-
-                screen.update.clock(hours, minutes, seconds);
-
-
-
-                handleNextEvent();
-
-            }
 
             const handleNextEvent = () => {
 
@@ -384,8 +198,7 @@
 
                 const diff = new Date(event_date.getTime() - date.getTime());
 
-
-                screen.update.event(ev.title, diff);
+                // screen.update.event(ev.title, diff);
 
                 const ONE_HOUR = (60000 * 60);
 
@@ -405,27 +218,31 @@
             }
 
 
-            async function handleLow () {
+            async function handleWeather () {
 
-                api('weather', (weather) => screen.update.weather( weather.temperature ) )
+                api('platforms/weather/toulouse', (weather) => screen.update.weather( weather.temperature ) )
 
-                api('version', function (status) {
+                setTimeout(() => handleWeather(), 60000)
 
-                    if (screen.version && screen.version != status.version) 
+            }
+
+            async function handleVersion () {
+
+                api('platforms/version', function (status) {
+
+                    if (screen.version && screen.version != status.interface) 
                     {
 
                         location.reload()
 
                     }
 
-                    screen.version = status.version
+                    screen.version = status.interface
 
-                    screen.update.version( screen.version );
+                    screen.update.version( screen.version);
 
                 } )
-
-
-                setTimeout(() => handleLow(), 60000)
+                setTimeout(() => handleVersion(), 10000)
 
             }
 
@@ -446,7 +263,8 @@
 
             initializeEvent();
             handleScreen();
-            handleLow();
+            handleVersion()
+            handleWeather();
 
     </script>
     

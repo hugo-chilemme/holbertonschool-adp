@@ -1,0 +1,25 @@
+:root {
+    --background-color: #ffffff;
+    --card-background-color: #f1f1f1;
+    --card-item-background-color: #cacaca;
+  
+    --title-color: #404040;
+    --text-color: #606060;
+    --label-color: #999999;
+  
+    --success-commit-color: #3ED462;
+    --failure-commit-color: #F25D5D;
+}
+
+.dark-theme {
+    --background-color: #212121;
+    --card-background-color: #292929;
+    --card-item-background-color: #393939;
+  
+    --title-color: #fff;
+    --text-color: #888;
+    --label-color: #666;
+  
+    --success-commit-color: #258133;
+    --failure-commit-color: #E33F3F;
+}
