@@ -170,7 +170,6 @@
                     commit: (commit) => {
 
 
-                        let XP_USER = commit.XP_BEFORE;
 
                         const exp_div = d.querySelector('.current-comitter .experience-comitter span');
                         const exp_val = d.querySelector('.current-comitter .experience-comitter span value');
@@ -195,20 +194,25 @@
 
                             let scoreboard;
                             if ( d.querySelector('[scoreboard-id="'+commit.USER_ID+'"]') )
-                                scoreboard = d.querySelector('[scoreboard-id="'+commit.USER_ID+'"] xp');
+                                scoreboard = d.querySelector('[scoreboard-id="'+commit.USER_ID+'"] .right span');
 
-                            console.log(scoreboard)
+                            const XP_USER = scoreboard ? parseInt(scoreboard.innerText) : 0;
+
+
                             setTimeout(() => {
                                 const XP = commit.XP;
 
                                 let num = 0;
 
                                 const loop = async () => {
+                                    if ( d.querySelector('[scoreboard-id="'+commit.USER_ID+'"]') )
+                                        scoreboard = d.querySelector('[scoreboard-id="'+commit.USER_ID+'"] .right span');
+                                    
                                     if (XP > 0 && XP >= num) {
                                             exp_val.innerText = `${num}`;
                                             exp_div.style.background = '#2DA13F';
                                             if (scoreboard)
-                                                scoreboard.innerText = `${XP_USER + num}`;
+                                                scoreboard.querySelector('xp').innerText = `${XP_USER + num}`;
 
                                             if ( exp_ico.classList.contains('bx-chevron-down') )
                                             {
@@ -221,7 +225,7 @@
                                             exp_val.innerText = `${num}`;
                                             exp_div.style.background = '#E33F3F';
                                             if (scoreboard)
-                                                scoreboard.innerText = `${XP_USER + num}`;
+                                                scoreboard.querySelector('xp').innerText = `${XP_USER + num}`;
 
                                             if ( exp_ico.classList.contains('bx-chevron-up') )
                                             {
@@ -232,17 +236,63 @@
                                             num -= 1;
                                             setTimeout(loop, 40);
                                     }
+
+                                    for (let i = 0; i < screen.scoreboard.length; i++)
+                                        if (screen.scoreboard[i].Login == commit.USER_ID)
+                                        {
+                                            screen.scoreboard[i].Experience = XP_USER + num;
+                                            screen.update.scoreboard(screen.scoreboard);
+                                            break;
+                                        }
                                 };
                                 loop()
                             }, 500)
 
-                            setTimeout(() => api('commits/'+ commit.ID + "/setDisplayed"), 5000)
+                            setTimeout(() => {
+                                api('commits/'+ commit.ID + "/setDisplayed");
+                                if (scoreboard)
+                                    scoreboard.style.background = "#393939";
+                            }, 5000)
                         }, 500)
 
                         
+                    },
+
+                    scoreboard: (scoreboard) => {
+
+                        scoreboard.sort((a, b) => b.Experience - a.Experience);
+                        screen.scoreboard = scoreboard
+                        const sb = d.querySelector('.scoreboard');
+                        const items = sb.querySelectorAll('.item');
+                        for (let i = 0; i < (scoreboard.length < 6 ? scoreboard.length : 6); i++)
+                        {
+                            const user = scoreboard[i];
+                            if (items[i])
+                            {
+                                items[i].querySelector('xp').innerText = user.Experience;
+                                if (items[i].getAttribute('scoreboard-id') !== user.Login)
+                                {
+                                    items[i].querySelector('img').src = user.Avatar;
+                                    items[i].querySelector('h3').innerText = user.Pseudo.split(' ')[0];
+                                    items[i].querySelector('h4').innerText = ' Cohort ' + user.Session;
+                                    items[i].setAttribute('scoreboard-id', user.Login);
+                                }
+                                continue;
+                            }
+                            let html = "";
+                            html += ' <div class="item" scoreboard-id="'+ user.Login +'"> ';
+                            html += '    <div class="picture"> <img src="' + user.Avatar + '"> </div> ';
+                            html += '    <div class="about"> <h3> ' + user.Pseudo.split(' ')[0] + '</h3>  <h4>Cohort ' + user.Session + '</h4> </div> ';
+                            html += '    <div class="right">  <span> <i class="bx bx-chevron-up" ></i> <xp>' + user.Experience + '</xp></span> </div> ';
+                            html += ' </div> ';
+
+                            sb.innerHTML += html;
+                        }
                     }
 
                 },
+
+                
 
             }
 
@@ -287,23 +337,9 @@
                     }
 
                 } )
-                api('scoreboard', (scoreboard) => {
-                    scoreboard.reverse()
-                    
-                    const sb = d.querySelector('.scoreboard');
-                    sb.innerHTML = "";
-                    for (let i = 0; i < (scoreboard.length < 6 ? scoreboard.length : 6); i++)
-                    {
-                        const user = scoreboard[i];
-                        let html = "";
-                        html += ' <div class="item" scoreboard-id="'+ user.Login +'"> ';
-                        html += '    <div class="picture"> <img src="' + user.Avatar + '"> </div> ';
-                        html += '    <div class="about"> <h3> ' + user.Pseudo.split(' ')[0] + '</h3>  <h4>Cohort ' + user.Session + '</h4> </div> ';
-                        html += '    <div class="right">  <span> <i class="bx bx-chevron-up" ></i> <xp>' + user.Experience + '</xp></span> </div> ';
-                        html += ' </div> ';
-
-                        sb.innerHTML += html;
-                    }
+                api('scoreboard', (scoreboard) => {                  
+                    screen.scoreboard = scoreboard
+                    screen.update.scoreboard(screen.scoreboard);
 
                 } )
 
