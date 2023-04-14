@@ -1,4 +1,4 @@
-# Holberton School Toulouse - Automatic Day Planner
+# Holberton School - Automatic Day Planner
 
 This open source project is designed for Holberton School Toulouse students as a student project. It allows for automatic opening of events at a scheduled time and displays students' commits in near real-time with scoring (backend not available).
 <br><br>
@@ -7,7 +7,7 @@ This open source project is designed for Holberton School Toulouse students as a
 1. Clone the repository:<br>
 
     ```bash
-    git clone https://github.com/HugoCLI/hbtn-toulouse-screen.git
+    git clone https://github.com/HugoCLI/holbertonschool-adp.git
     ```
 2. Install dependencies:<br>
     ```bash
