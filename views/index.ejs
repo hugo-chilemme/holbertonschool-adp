@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="/assets/contains.css?id=<%= manifest_version %>">
 
     <meta platform="endpoint" value="<%= endpoint %>">
-    <meta client="address" value="<%= address %>">
+    
 </head>
 <body>
 
@@ -140,63 +140,6 @@
 
 
             let last_commit;
-            async function handleScreen () {
-
-                api('commits/pending?limit=1', (request) => {
-                    const commits = request.results;
-                    if (commits.length > 0) 
-                    {
-                        const commit = commits[0];
-                        if (!last_commit || last_commit != commit.ID)
-                        {
-
-                            const xpTotal = commit.XP;
-                            screen.update.commit.count(0);
-                            screen.update.commit.element(commit)
-
-
-                            function updateExperienceCount() {
-                                let xpCount = 0;
-
-                                const increment = xpTotal > 0 ? 1 : -1;
-
-                                function updateScreen() {
-                                    screen.update.commit.count(xpCount);
-                                }
-
-                                function animate() {
-                                    xpCount += increment;
-                                    updateScreen();
-                                    if (xpCount !== xpTotal) {
-                                        setTimeout(animate, 3500 / xpTotal);
-                                    }
-                                }
-
-                                setTimeout(() => animate(), 1000)
-                            }
-                            if (xpTotal != 0)
-                                updateExperienceCount()
-
-                            setTimeout(() => api('commits/displayed/'+ commit.ID), 5000)
-                            
-                            last_commit = commit.ID;
-
-                        }
-
-
-                    }
-
-                } )
-                api('users/scoreboard', (request) => {                  
-                    screen.scoreboard = request.results
-                    screen.update.scoreboard(screen.scoreboard);
-
-                } )
-
-                setTimeout(() => handleScreen(), 10000);
-
-            }
-
             let isScheduled = false;
 
             const handleNextEvent = () => {
@@ -235,33 +178,6 @@
             }
 
 
-            async function handleWeather () {
-
-                api('platforms/weather/toulouse', (weather) => screen.update.weather( weather.temperature ) )
-
-                setTimeout(() => handleWeather(), 60000)
-
-            }
-
-            async function handleVersion () {
-
-                api('platforms/version', function (status) {
-
-                    if (screen.version && screen.version != status.interface) 
-                    {
-
-                        location.reload()
-
-                    }
-
-                    screen.version = status.interface
-
-                    screen.update.version( screen.version);
-
-                } )
-                setTimeout(() => handleVersion(), 10000)
-
-            }
 
 
             async function initializeEvent () {
@@ -278,10 +194,87 @@
                 }
             }
 
+
+
+            async function handleVersion ( status ) {
+                if (!screen.version || screen.version == status.interface) 
+                {
+                    screen.version = status.interface
+                    return;
+                }
+                location.reload();
+            }
+            
+
+            async function handleWeather ( weather ) {
+                screen.update.weather( weather.temperature )
+            }
+
+
+            async function handleCommits ( request ) {
+                const commits = request.results;
+                if (commits.length > 0) 
+                {
+                    const commit = commits[0];
+                    if (!last_commit || last_commit != commit.ID)
+                    {
+
+                        const xpTotal = commit.XP;
+                        screen.update.commit.count(0);
+                        screen.update.commit.element(commit)
+
+
+                        function updateExperienceCount() {
+                            let xpCount = 0;
+
+                            const increment = xpTotal > 0 ? 1 : -1;
+
+                            function updateScreen() {
+                                screen.update.commit.count(xpCount);
+                            }
+
+                            function animate() {
+                                xpCount += increment;
+                                updateScreen();
+                                if (xpCount !== xpTotal) {
+                                    setTimeout(animate, 3500 / xpTotal);
+                                }
+                            }
+
+                            setTimeout(() => animate(), 1000)
+                        }
+                        if (xpTotal != 0)
+                            updateExperienceCount()
+
+                        setTimeout(() => api('commits/displayed/'+ commit.ID), 5000)
+                        
+                        last_commit = commit.ID;
+
+                    }
+
+                }
+            }
+
+
+            async function handleScoreboard ( request ) {
+                screen.scoreboard = request.results
+                screen.update.scoreboard(screen.scoreboard);
+            }
+
+
+            const weather = new ApiController('platforms/weather/toulouse', handleWeather);
+            weather.setAutoRefresh(60000).sendRequest();
+
+            const version = new ApiController('platforms/version', handleVersion);
+            version.setAutoRefresh(60000).sendRequest();
+
+            const commits = new ApiController('commits/pending?limit=1', handleCommits);
+            commits.setAutoRefresh(15000).sendRequest();
+
+            const scoreboard = new ApiController('users/scoreboard', handleScoreboard);
+            scoreboard.sendRequest();
+
             initializeEvent();
-            handleScreen();
-            handleVersion()
-            handleWeather();
 
     </script>
     

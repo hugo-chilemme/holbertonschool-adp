@@ -5,17 +5,13 @@ const app = express();
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
+const router = { 
+  manifest_version: 3,
+  endpoint: "https://hbtn.hugochilemme.com/api/v3",
+}
 
 app.get('/', (req, res) => {
-  const address = req['headers']['cf-connecting-ip'];
-
-  res.render('index', { 
-    manifest_version: 2,
-    endpoint: "https://hbtn.hugochilemme.com/api/v3",
-    address,
-   });
+  res.render('index', router);
 });
 
-app.listen(2016, () => {
-  console.log('Serveur démarré sur le port 2016');
-});
+app.listen(2016);
