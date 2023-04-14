@@ -6,7 +6,7 @@ app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
 const router = { 
-  manifest_version: 3,
+  manifest_version: 4,
   endpoint: "https://hbtn.hugochilemme.com/api/v3",
 }
 
