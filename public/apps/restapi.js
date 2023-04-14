@@ -34,12 +34,15 @@ class ApiController {
     
         console.debug(`api  ==>  /v3/${this.event}`);
         xhttp.onreadystatechange = () => {
-            if (xhttp.readyState == 4 && xhttp.status == 200) {
+            if (xhttp.readyState == 4 && xhttp.status == 200 && this.callback) {
     
                 const ms = new Date().getTime() - start;
-                console.debug(`api  <==  /v3/${this.event}  [${ms.toFixed(0)}ms]`);
+                
+                console.log(`api  <==  /v3/${this.event}  [${ms.toFixed(0)}ms]`);
     
-                this.callback( JSON.parse( xhttp.responseText ) );
+                const obj = JSON.parse( xhttp.responseText );
+                
+                this.callback( obj.results ? obj.results : obj );
     
             }
         }

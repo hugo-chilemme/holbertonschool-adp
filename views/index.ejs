@@ -71,25 +71,29 @@
 
             </header>
 
-            <section class="committers">
+            <div class="paginations">
 
-                <div class="current-comitter unshow">
-                    <h5>from <repo> </repo> </h5>
-                    <h1> </h1>
-                    <div class="about-committer">
-                        <h3> <img src=""> Committed by <author> </author> </h3>
-                        <div class="experience-comitter">
-                            <span><i id="icon" class='bx bx-chevron-up'></i> <value></value></span>
+                <section class="committers">
+
+                    <div class="current-comitter unshow">
+                        <h5>from <repo> </repo> </h5>
+                        <h1> </h1>
+                        <div class="about-committer">
+                            <h3> <img src=""> Committed by <author> </author> </h3>
+                            <div class="experience-comitter">
+                                <span><i id="icon" class='bx bx-chevron-up'></i> <value></value></span>
+                            </div>
                         </div>
-                    </div>
-                </div> 
+                    </div> 
+    
+                    <div class="scoreboard"></div>
+                </section>
 
-                <div class="scoreboard">
 
-                    
-                </div>
+                <section class="events hide">
 
-            </section>
+                </section>
+            </div>
 
         </aside>
 
@@ -99,10 +103,9 @@
 <footer>
     <script src="/apps/restapi.js?id=<%= manifest_version %>"></script>
     <script src="/apps/screen.js?id=<%= manifest_version %>"></script>
-    <script src="/apps/event.js?id=<%= manifest_version %>"></script>
+    <script src="/apps/events.js?id=<%= manifest_version %>"></script>
+    <script src="/apps/commits.js?id=<%= manifest_version %>"></script>
     <script>
-
-            
 
 
             const d = document;
@@ -112,7 +115,7 @@
 
                 { day: [1], hour: 9, minute: 0, title:"Check-in", link: 'zoommtg://zoom.us/join?confno=83251922994&pwd=QlMwV2J3N2lDbGFmQkdaN0FYalNzZz09' },
 
-                { day: [1, 2, 3, 4, 5], hour: 20, minute: 59, title: "Speaker Of the Day", link: 'zoommtg://zoom.us/join?confno=84822594283&pwd=eXhPV1BUdVBGU1BXaWVaQllqN0luZz09' },
+                { day: [1, 2, 3, 4, 5], hour: 11, minute: 30, title: "Speaker Of the Day", link: 'zoommtg://zoom.us/join?confno=84822594283&pwd=eXhPV1BUdVBGU1BXaWVaQllqN0luZz09' },
 
                 { day: [1, 2, 3, 4, 5], hour: 11, minute: 45, title: "Stand-up", link: 'zoommtg://zoom.us/join?confno=83392530685&pwd=SEdOTUpibVlOTTU0bDFHNEdPVll5QT09' },
 
@@ -137,127 +140,37 @@
                 d.querySelector('html').classList.remove('dark-theme')
             })
 
-
-
-            let last_commit;
-            let isScheduled = false;
-
-            const handleNextEvent = () => {
-
-                const ev = event.next();
-                const date = new Date();
-
-
-                if ( !ev ) return;
-
-                const event_date = new Date();
-                event_date.setHours(ev.hour);
-                event_date.setMinutes(ev.minute);
-                event_date.setSeconds(0);
-                event_date.setMilliseconds(0);
-
-                const diff = new Date(event_date.getTime() - date.getTime());
-
-                // screen.update.event(ev.title, diff);
-
-                const ONE_HOUR = (60000 * 60);
-
-                if ( diff.getTime() < ONE_HOUR)
-                {
-
-                    if (diff.getMinutes() < 5 && !isScheduled)
-                    {
-
-                        window.open(ev.link);
-                        isScheduled = true;
-                        setTimeout(async () => isScheduled = false, 300000)
-
-                    }
-
-                }
-            }
-
-
-
-
-            async function initializeEvent () {
-
-                const events = d.querySelector('header .lists');
-
-                for (const event of schedule)
-                {
-
-                    const { title, link } = event;
-
-                    events.innerHTML += `<a href="${link}" target="_blanl">${title}</a>`;
-
-                }
-            }
-
-
-
             async function handleVersion ( status ) {
                 if (!screen.version || screen.version == status.interface) 
                 {
+                    screen.update.version( status.interface );
                     screen.version = status.interface
                     return;
                 }
                 location.reload();
             }
-            
+
 
             async function handleWeather ( weather ) {
                 screen.update.weather( weather.temperature )
             }
 
+            async function handleCommits ( commitsList ) {
 
-            async function handleCommits ( request ) {
-                const commits = request.results;
-                if (commits.length > 0) 
-                {
-                    const commit = commits[0];
-                    if (!last_commit || last_commit != commit.ID)
-                    {
-
-                        const xpTotal = commit.XP;
-                        screen.update.commit.count(0);
-                        screen.update.commit.element(commit)
-
-
-                        function updateExperienceCount() {
-                            let xpCount = 0;
-
-                            const increment = xpTotal > 0 ? 1 : -1;
-
-                            function updateScreen() {
-                                screen.update.commit.count(xpCount);
-                            }
-
-                            function animate() {
-                                xpCount += increment;
-                                updateScreen();
-                                if (xpCount !== xpTotal) {
-                                    setTimeout(animate, 3500 / xpTotal);
-                                }
-                            }
-
-                            setTimeout(() => animate(), 1000)
-                        }
-                        if (xpTotal != 0)
-                            updateExperienceCount()
-
-                        setTimeout(() => api('commits/displayed/'+ commit.ID), 5000)
-                        
-                        last_commit = commit.ID;
-
-                    }
-
+                async function sendToDisplay(commit) {
+                    commits.sentToDisplay(commit);
                 }
+
+                if (commitsList.length > 0) 
+                {
+                    sendToDisplay(commitsList[0])
+                }
+                
             }
 
 
-            async function handleScoreboard ( request ) {
-                screen.scoreboard = request.results
+            async function handleScoreboard ( scoreboard ) {
+                screen.scoreboard = scoreboard
                 screen.update.scoreboard(screen.scoreboard);
             }
 
@@ -268,13 +181,18 @@
             const version = new ApiController('platforms/version', handleVersion);
             version.setAutoRefresh(60000).sendRequest();
 
-            const commits = new ApiController('commits/pending?limit=1', handleCommits);
-            commits.setAutoRefresh(15000).sendRequest();
+            const getNewCommit = new ApiController('commits/pending?limit=1', handleCommits);
+            getNewCommit.setAutoRefresh(15000).sendRequest();
 
             const scoreboard = new ApiController('users/scoreboard', handleScoreboard);
             scoreboard.sendRequest();
 
-            initializeEvent();
+            const latest = new ApiController("commits/latest", handleCommits);
+            latest.sendRequest();
+
+
+            setInterval(() => events.openOnTime(), 5000);
+            event.listView();
 
     </script>
     

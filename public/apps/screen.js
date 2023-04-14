@@ -32,6 +32,7 @@ const screen = {
             },
 
             count: (xp) => {
+                
                 const exp_div = d.querySelector('.current-comitter .experience-comitter span');
                 const exp_ico = d.querySelector('.current-comitter .experience-comitter span #icon');
 

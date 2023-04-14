@@ -54,7 +54,7 @@
     color: var(--label-color)
 }
 
-.contains .committers {
+.contains section {
     display: flex;
     height: calc(100vh - 100px);
     width: 100%;
