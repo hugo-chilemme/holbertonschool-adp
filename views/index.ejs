@@ -2,7 +2,7 @@
 <html lang="EN_en">
 <head>
 
-    <title> </title>
+    <title> Holberton School - Automatic Day Planner </title>
 
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,10 +14,13 @@
 
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
-    <link rel="stylesheet" href="./assets/router.css">
-    <link rel="stylesheet" href="./assets/common.css">
-    <link rel="stylesheet" href="./assets/navbar.css">
-    <link rel="stylesheet" href="./assets/contains.css">
+    <link rel="stylesheet" href="/assets/router.css?id=<%= manifest_version %>">
+    <link rel="stylesheet" href="/assets/common.css?id=<%= manifest_version %>">
+    <link rel="stylesheet" href="/assets/navbar.css?id=<%= manifest_version %>">
+    <link rel="stylesheet" href="/assets/contains.css?id=<%= manifest_version %>">
+
+    <meta platform="endpoint" value="<%= endpoint %>">
+    <meta client="address" value="<%= address %>">
 </head>
 <body>
 
@@ -25,9 +28,14 @@
 
         <header class="navbar">
 
-            <i class='bx bx-home-alt-2 active' ></i>
-            <i class='bx bx-calendar-event'></i>
-            <i class='bx bx-git-commit' ></i>
+            <div class="block">
+                <i class='bx bx-home-alt-2 active' ></i>
+                <i class='bx bx-calendar-event'></i>
+                <i class='bx bx-git-commit' ></i>
+            </div>
+            <div class="block bottom">
+                <i class='bx bx-cog'></i>
+            </div>
             
         </header>
 
@@ -80,9 +88,9 @@
 
 </body>
 <footer>
-    <script src="./apps/restapi.js"></script>
-    <script src="./apps/screen.js"></script>
-    <script src="./apps/event.js"></script>
+    <script src="/apps/restapi.js?id=<%= manifest_version %>"></script>
+    <script src="/apps/screen.js?id=<%= manifest_version %>"></script>
+    <script src="/apps/event.js?id=<%= manifest_version %>"></script>
     <script>
 
             
@@ -151,7 +159,7 @@
                                     xpCount += increment;
                                     updateScreen();
                                     if (xpCount !== xpTotal) {
-                                        setTimeout(animate, 50);
+                                        setTimeout(animate, 3500 / xpTotal);
                                     }
                                 }
 
@@ -176,7 +184,7 @@
 
                 } )
 
-                setTimeout(() => handleScreen(), 15000);
+                setTimeout(() => handleScreen(), 10000);
 
             }
 

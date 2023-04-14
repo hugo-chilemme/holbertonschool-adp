@@ -1,13 +1,20 @@
 header.navbar {
-
     display: flex;
     width: 100px;
     height: 100vh;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    
     background-color: var(--card-background-color);
+    justify-content: space-between;
+    padding: 5rem 0;
+}
+header.navbar .block {
+    height: 40%;
+}
+
+header.navbar .block.bottom {
+    display: flex;
+    align-items: flex-end;
 }
 
 header.navbar i {

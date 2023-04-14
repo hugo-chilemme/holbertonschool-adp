@@ -15,10 +15,10 @@ const screen = {
             element: (commit) => {
                 d.querySelector('.current-comitter h1').style.opacity = 0;
                 setTimeout(() => {
-                    let title = commit.TITLE;
+                    let title = atob(commit.TITLE);
                     const is_merge = title.includes('Merge pull request');
                     if (is_merge)
-                        title = title.split('\n')[1].trim();
+                        title = title.split('\n')[2].trim();
 
 
 
