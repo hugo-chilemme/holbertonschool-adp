@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="EN_en">
+<html lang="EN_en" class="dark-theme ">
 <head>
 
     <!--
@@ -38,12 +38,14 @@
         <header class="navbar">
 
             <div class="block">
-                <i class='bx bx-home-alt-2 active' ></i>
-                <i class='bx bx-calendar-event'></i>
-                <i class='bx bx-git-commit' ></i>
+                <i class='bx bx-home-alt-2' ></i>
+                <i class='bx bx-calendar-event' page="events"></i>
+                <i class='bx bx-git-commit active' page="committers"></i>
             </div>
             <div class="block bottom">
                 <i class='bx bx-cog'></i>
+                <i class='moon bx bx-moon hide' ></i>
+                <i class='sun bx bxs-sun' ></i>
             </div>
             
         </header>
@@ -53,23 +55,11 @@
             <header>
 
                 <div class="menu">
-                    <span class="theme">
-                        <i class='moon bx bx-moon' ></i>
-                        <i class='sun bx bxs-sun hide' ></i>
-                    </span>
-                    <version-text> </version-text>
-                    <div class="lists">
-
-                    </div>
-                </div>
-
-                <div class="right">
-                    <span class="weather">
-                        <value>-</value> <celcus>°C</celcus>
-                    </span>
+                    <version-text> </version-text>  <a href="https://github.com/HugoCLI/holbertonschool-adp" target="_blank">Contribute</a>
                 </div>
 
             </header>
+
 
             <div class="paginations">
 
@@ -91,7 +81,6 @@
 
 
                 <section class="events hide">
-
                 </section>
             </div>
 
@@ -105,6 +94,7 @@
     <script src="/apps/screen.js?id=<%= manifest_version %>"></script>
     <script src="/apps/events.js?id=<%= manifest_version %>"></script>
     <script src="/apps/commits.js?id=<%= manifest_version %>"></script>
+    <script src="/apps/paginations.js?id=<%= manifest_version %>"></script>
     <script>
 
 
@@ -175,8 +165,8 @@
             }
 
 
-            const weather = new ApiController('platforms/weather/toulouse', handleWeather);
-            weather.setAutoRefresh(60000).sendRequest();
+            // const weather = new ApiController('platforms/weather/toulouse', handleWeather);
+            // weather.setAutoRefresh(60000).sendRequest();
 
             const version = new ApiController('platforms/version', handleVersion);
             version.setAutoRefresh(60000).sendRequest();
@@ -191,8 +181,9 @@
             latest.sendRequest();
 
 
+            paginations.init();
             setInterval(() => event.openOnTime(), 5000);
-            event.listView();
+            // event.listView();
 
     </script>
     

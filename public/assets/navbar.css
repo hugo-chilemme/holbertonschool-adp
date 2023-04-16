@@ -1,6 +1,8 @@
 header.navbar {
+    --width: 100px;
+
     display: flex;
-    width: 100px;
+    width: var(--width);
     height: 100vh;
     flex-direction: column;
     align-items: center;
@@ -14,14 +16,15 @@ header.navbar .block {
 
 header.navbar .block.bottom {
     display: flex;
-    align-items: flex-end;
+    flex-direction: column-reverse;
+    width: 100%;
 }
 
 header.navbar i {
     color: var(--label-color);
     font-size: 30px;
-    width: 100px;
-    height: 100px;
+    width: var(--width);
+    height: var(--width);
     display: inline-flex;
     border: 2px solid transparent;
     align-items: center;
