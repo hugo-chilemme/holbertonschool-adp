@@ -7,11 +7,16 @@
 }
 .contains header {
     display:flex;
+    position: fixed;
+    top:0;
+    right:0;
+    left: var(--navbar-height);
     height: 100px;
-    width: 100%;
+    padding: 0 2.5rem;
+    width: calc(100% - var(--navbar-height));
 }
 .contains header .menu {
-    width: 60%;
+    width: 100%;
     display: flex;
     align-items: center;
     color:#aaa; 
@@ -27,36 +32,9 @@
     font-size: 14px;
 }
 
-
-.contains header .right {
-    width: 40%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
-
-.contains header .weather {
-    font-size: 30px;
-    font-weight: 400;
-    color:var(--title-color)
-}
-
-.contains header .theme {
-    font-size: 20px;
-    font-weight: 400;
-    padding:10px;
-    border-radius: 10px;
-    color:var(--title-color);
-    margin-right: 15px;
-}
-
-.contains header .weather celcus {
-    color: var(--label-color)
-}
-
 .contains section {
     display: flex;
-    height: calc(100vh - 100px);
+    height: 100vh;
     width: 100%;
     align-items: center;
     justify-content: space-around;
@@ -64,7 +42,7 @@
 
 .contains .committers .current-comitter {
     width: 40%;
-    height: calc(100vh - 100px);
+    height: 100vh;
     display:flex;
     justify-content: center;
     flex-direction: column;
@@ -200,3 +178,5 @@
 .contains .committers .scoreboard .item .picture {
     width: 85px;
 }
+
+

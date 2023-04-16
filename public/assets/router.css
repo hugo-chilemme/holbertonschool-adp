@@ -9,6 +9,8 @@
   
     --success-commit-color: #3ED462;
     --failure-commit-color: #F25D5D;
+
+    --navbar-height: 100px;
 }
 
 .dark-theme {
