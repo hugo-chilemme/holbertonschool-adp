@@ -38,8 +38,9 @@
             });
 
             const params = new URLSearchParams(window.location.search);
-            if (params[0] && params[0] == "page" && params[1])
-                return paginations.load(params[1])
+            if (params.get('page'))
+                return paginations.load(params.get('page'))
+
             paginations.load("committers")   
 
         }

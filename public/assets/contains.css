@@ -66,12 +66,18 @@
     align-items: center;
 }
 .contains .committers .current-comitter h5 {
-    color: var(--label-color);
+    color: var(--text-color);
     font-weight: 400;
-    margin-bottom: 15px;
-    font-size: 15px;
+    margin-bottom: 25px;
 
 }
+.contains .committers .current-comitter h5 repo {
+    border-radius: 5px;
+    background:var(--card-background-color);
+    padding:7px 14px;
+    font-size: 15px;
+}
+
 .contains .committers .current-comitter h3 author {
     color:var(--title-color);
     font-weight: 500;
@@ -179,4 +185,70 @@
     width: 85px;
 }
 
+.contains section.events {
+    align-items: center;
+    justify-content: space-around;
+    padding: 5rem;
+}
 
+.contains section.events .school {
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: center;
+    padding:2.5rem;
+    align-items: start;
+}
+
+.contains section.events .school p {
+    color:#999;
+    width: 75%;
+    line-height: 2em;
+}
+
+.contains section.events .school w {
+    color:var(--text-color);
+}
+.contains .events .school h1 {
+    color:var(--title-color);
+    font-weight: 200;
+    margin-bottom: 50px;
+    font-size: 3rem;
+}
+.contains section.events .events-list {
+    display: flex;
+    flex-wrap: wrap;
+    width: 500px;
+}
+.contains section.events .events-list .item {
+    padding: 25Px;
+    width: 375px;
+    height: 150px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    display: flex;
+    border-radius: 5px;
+    background: var(--card-background-color);
+    flex-direction: column;
+    justify-content: space-between;
+}
+.contains section.events .events-list .item h1 {
+    color:var(--title-color);
+    font-size: 1.25rem;
+    font-weight: 400;
+}
+
+.contains section.events .events-list .item h4 {
+    color:#777777;
+    font-weight: 400;
+}
+
+.contains section.events .events-list .item .mandatory {
+    background:var(--card-item-background-color);
+    padding:7px 14px;
+    border-radius: 50px;
+    font-size: 13px;
+    display:inline-flex;
+    margin-left: 10px;
+    color:var(--text-color)
+}

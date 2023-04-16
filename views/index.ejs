@@ -38,7 +38,7 @@
         <header class="navbar">
 
             <div class="block">
-                <i class='bx bx-home-alt-2' ></i>
+                <!-- <i class='bx bx-home-alt-2' ></i> -->
                 <i class='bx bx-calendar-event' page="events"></i>
                 <i class='bx bx-git-commit active' page="committers"></i>
             </div>
@@ -66,7 +66,7 @@
                 <section class="committers">
 
                     <div class="current-comitter unshow">
-                        <h5>from <repo> </repo> </h5>
+                        <h5><repo> </repo> </h5>
                         <h1> </h1>
                         <div class="about-committer">
                             <h3> <img src=""> Committed by <author> </author> </h3>
@@ -76,11 +76,21 @@
                         </div>
                     </div> 
     
-                    <div class="scoreboard"></div>
+                    <div class="scoreboard "></div>
                 </section>
 
 
                 <section class="events hide">
+
+                    <div class="school">
+                        <h1>Holberton School Toulouse</h1>
+                        <p>Events are automatically detected and displayed according to your campus, the mandatory or optional mention is attached to each event.
+                            <br><br><w>We encourage all members</w> of the community to participate in each event.
+                            <br>Events will open automatically, be sure to leave this page active.</p>
+                    </div>
+                    <div class="events-list">
+                        
+                    </div>
                 </section>
             </div>
 
@@ -103,13 +113,13 @@
 
                 // Recurring event
 
-                { day: [1], hour: 9, minute: 0, title:"Check-in", link: 'zoommtg://zoom.us/join?confno=83251922994&pwd=QlMwV2J3N2lDbGFmQkdaN0FYalNzZz09' },
+                { day: [1], hour: 9, minute: 0, mandatory:true, title:"Check-in", link: 'zoommtg://zoom.us/join?confno=83251922994&pwd=QlMwV2J3N2lDbGFmQkdaN0FYalNzZz09' },
 
-                { day: [1, 2, 3, 4, 5], hour: 11, minute: 30, title: "Speaker Of the Day", link: 'zoommtg://zoom.us/join?confno=84822594283&pwd=eXhPV1BUdVBGU1BXaWVaQllqN0luZz09' },
+                { day: [1, 2, 3, 4, 5], hour: 11, minute: 30,  mandatory:true, title: "Speaker Of the Day", link: 'zoommtg://zoom.us/join?confno=84822594283&pwd=eXhPV1BUdVBGU1BXaWVaQllqN0luZz09' },
 
-                { day: [1, 2, 3, 4, 5], hour: 11, minute: 45, title: "Stand-up", link: 'zoommtg://zoom.us/join?confno=83392530685&pwd=SEdOTUpibVlOTTU0bDFHNEdPVll5QT09' },
+                { day: [1, 2, 3, 4, 5], hour: 11, minute: 45,  mandatory:true, title: "Stand-up", link: 'zoommtg://zoom.us/join?confno=83392530685&pwd=SEdOTUpibVlOTTU0bDFHNEdPVll5QT09' },
 
-                { day: [5], title: "France Wrap-up", hour: 15, minute: 30, link: 'zoommtg://zoom.us/join?confno=87494744554&pwd=YzJkZ3lvMml3QXpjejRvaWRYaDVtQT09' },
+                { day: [5], title: "France Wrap-up", hour: 15,  mandatory:true, minute: 30, link: 'zoommtg://zoom.us/join?confno=87494744554&pwd=YzJkZ3lvMml3QXpjejRvaWRYaDVtQT09' },
 
 
                 // Temporary event
@@ -183,7 +193,7 @@
 
             paginations.init();
             setInterval(() => event.openOnTime(), 5000);
-            // event.listView();
+            event.listView();
 
     </script>
     

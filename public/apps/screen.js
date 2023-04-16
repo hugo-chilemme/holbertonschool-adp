@@ -63,6 +63,7 @@ const screen = {
             scoreboard.sort((a, b) => b.XP - a.XP);
             screen.scoreboard = scoreboard
             const sb = d.querySelector('.scoreboard');
+           
             const items = sb.querySelectorAll('.item');
             for (let i = 0; i < (scoreboard.length < 6 ? scoreboard.length : 6); i++)
             {
@@ -85,7 +86,6 @@ const screen = {
                 html += '    <div class="about"> <h3> ' + user.Pseudo.split(' ')[0] + '</h3>  <h4>Cohort ' + user.Session + '</h4> </div> ';
                 html += '    <div class="right">  <span> <i class="bx bx-chevron-up" ></i> <xp>' + user.XP + '</xp></span> </div> ';
                 html += ' </div> ';
-
                 sb.innerHTML += html;
             }
         }
