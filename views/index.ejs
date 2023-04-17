@@ -19,7 +19,8 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
@@ -113,7 +114,9 @@
 
                 // Recurring event
 
-                { day: [1], hour: 9, minute: 0, mandatory:true, title:"Check-in", link: 'zoommtg://zoom.us/join?confno=83251922994&pwd=QlMwV2J3N2lDbGFmQkdaN0FYalNzZz09' },
+                { day: [1], hour: 9, minute: 15, mandatory:true, title:"Check-in", link: 'zoommtg://zoom.us/join?confno=88915534370' },
+
+                { day: [1], hour: 9, minute: 30, mandatory:true, title:"Check-in", link: 'zoommtg://zoom.us/join?confno=82896393672&pwd=SzBwb3dvK2l2Z1pzeVA1SWdwN24vdz09' },
 
                 { day: [1, 2, 3, 4, 5], hour: 11, minute: 30,  mandatory:true, title: "Speaker Of the Day", link: 'zoommtg://zoom.us/join?confno=84822594283&pwd=eXhPV1BUdVBGU1BXaWVaQllqN0luZz09' },
 
@@ -155,15 +158,13 @@
                 screen.update.weather( weather.temperature )
             }
 
-            async function handleCommits ( commitsList ) {
+            async function handleCommit ( commit ) {
 
-                async function sendToDisplay(commit) {
-                    commits.sentToDisplay(commit);
-                }
-
-                if (commitsList.length > 0) 
+                if (Object.keys(commit).length > 0)
                 {
-                    sendToDisplay(commitsList[0])
+
+                    commits.sentToDisplay(commit);
+
                 }
                 
             }
@@ -181,14 +182,11 @@
             const version = new ApiController('platforms/version', handleVersion);
             version.setAutoRefresh(60000).sendRequest();
 
-            const getNewCommit = new ApiController('commits/pending?limit=1', handleCommits);
-            getNewCommit.setAutoRefresh(15000).sendRequest();
+            const getNewCommit = new ApiController('commits/current', handleCommit);
+            getNewCommit.setAutoRefresh(5000).sendRequest();
 
             const scoreboard = new ApiController('users/scoreboard', handleScoreboard);
-            scoreboard.sendRequest();
-
-            const latest = new ApiController("commits/latest", handleCommits);
-            latest.sendRequest();
+            scoreboard.setAutoRefresh(10000).sendRequest();
 
 
             paginations.init();

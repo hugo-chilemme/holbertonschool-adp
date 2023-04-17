@@ -65,7 +65,6 @@ const event = {
         const ev = event.next();
         const date = new Date();
 
-        console.log(ev)
         if ( !ev ) return;
 
         const event_date = new Date();

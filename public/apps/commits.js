@@ -25,8 +25,10 @@
                             setTimeout(animate, 3500 / xpTotal);
                         }
                     }
-
-                    setTimeout(() => animate(), 1000)
+                    if (xpTotal != 0)
+                    {
+                        setTimeout(() => animate(), 1000)
+                    }
                 }
                 if (xpTotal != 0)
                     updateExperienceCount()
