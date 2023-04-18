@@ -67,7 +67,7 @@
                 <section class="committers">
 
                     <div class="current-comitter unshow">
-                        <h5><repo> </repo> </h5>
+                        <h5><repo> </repo> <date> - ago </date></h5>
                         <h1> </h1>
                         <div class="about-committer">
                             <h3> <img src=""> Committed by <author> </author> </h3>
@@ -106,6 +106,7 @@
     <script src="/apps/events.js?id=<%= manifest_version %>"></script>
     <script src="/apps/commits.js?id=<%= manifest_version %>"></script>
     <script src="/apps/paginations.js?id=<%= manifest_version %>"></script>
+    <script src="/apps/functions.js?id=<%= manifest_version %>"></script>
     <script>
 
 
@@ -158,13 +159,20 @@
                 screen.update.weather( weather.temperature )
             }
 
+            let lastComitter;
             async function handleCommit ( commit ) {
 
                 if (Object.keys(commit).length > 0)
                 {
-
+                    lastComitter = commit.USER_ID;
                     commits.sentToDisplay(commit);
 
+                }
+                else if (!lastComitter)
+                {
+                    const latest = new ApiController('commits/latest', handleCommit);
+                    latest.sendRequest();
+                    lastComitter = "";
                 }
                 
             }
@@ -188,10 +196,11 @@
             const scoreboard = new ApiController('users/scoreboard', handleScoreboard);
             scoreboard.setAutoRefresh(10000).sendRequest();
 
+            const getEvents = new ApiController('events/fetch?period=week', events.init);
+            getEvents.setAutoRefresh(60000).sendRequest();
 
             paginations.init();
-            setInterval(() => event.openOnTime(), 5000);
-            event.listView();
+            setInterval(() => events.openOnTime(), 5000);
 
     </script>
     

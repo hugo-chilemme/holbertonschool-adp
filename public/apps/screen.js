@@ -28,6 +28,21 @@ const screen = {
                     d.querySelector('.current-comitter .about-committer author').innerText = commit.USER.Pseudo.split(' ')[0]
                     d.querySelector('.current-comitter .about-committer img').src = commit.USER.Avatar;
                     d.querySelector('.current-comitter repo').innerText = commit.REPOSITORY;
+                    const date = new Date(new Date() - new Date(parseInt(commit.DATETIME)));
+
+                    let ago = { value: date.getDay(), text: "day" };
+
+                    if (date.getDay() !== 0)
+                    {
+                        ago = { value: date.getHours(), text: "hour" };
+                    }
+                    else if (date.getHours() !== 0) 
+                    {
+                        ago = { value: date.getMinutes(), text: "minute" };
+                    }
+                    d.querySelector('.current-comitter date').innerText = ago.value + " " + addPlural(ago.value, ago.text) + " ago";  
+
+                  
                 }, 500)
             },
 

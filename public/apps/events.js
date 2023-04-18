@@ -1,7 +1,13 @@
 let isScheduled = false;
 const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-const event = {
+const events = {
+
+    lists: {},
+
+    init: (events) => {
+        events.lists = events;
+    },
 
     nexts: () => {
 
@@ -30,12 +36,12 @@ const event = {
 
     },
 
-    next: () => event.nexts()[0],
+    next: () => events.nexts()[0],
 
 
     listView: () => {
 
-        const events = d.querySelector('.events-list');
+        const schedules = d.querySelector('.events-list');
 
         for (const event of schedule)
         {
@@ -55,34 +61,35 @@ const event = {
             html += '   </div>';
             html += '</div>';
 
-            events.innerHTML += html
+            schedules.innerHTML += html
 
         }
     },
 
     openOnTime: () => {
 
-        const ev = event.next();
-        const date = new Date();
+        const eventObj = events.next();
+    
+        if ( !eventObj ) return;
 
-        if ( !ev ) return;
+        // Retrieving the current date 
+        const dateNow = new Date();
 
-        const event_date = new Date();
-        event_date.setHours(ev.hour);
-        event_date.setMinutes(ev.minute);
-        event_date.setSeconds(0);
-        event_date.setMilliseconds(0);
-
-        const diff = new Date(event_date.getTime() - date.getTime());
-
-        // screen.update.event(ev.title, diff);
+        // Creating the event date object
+        const dateEvent = new Date();
+        dateEvent.setHours(eventObj.hour, eventObj.minute, 0, 0);
+        
 
         const ONE_HOUR = (60000 * 60);
 
-        if ( diff.getTime() < ONE_HOUR)
+        // Calculating the difference between the two dates
+        const DATE_REMAINING = new Date( dateEvent.getTime() - dateNow.getTime() );
+        
+
+        if ( DATE_REMAINING.getTime() < ONE_HOUR)
         {
 
-            if (diff.getMinutes() < 5 && !isScheduled)
+            if ( DATE_REMAINING.getMinutes() < 5 && !isScheduled )
             {
 
                 window.open(ev.link);
