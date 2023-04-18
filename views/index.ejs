@@ -33,7 +33,11 @@
     
 </head>
 <body>
+    <div class="format">
+        <h1> Mince, ton écran est un peu timide </h1>
+        <h3>Petit écran : la résolution n'est pas à la hauteur</h3>
 
+    </div>
     <aside>
 
         <header class="navbar">
@@ -130,6 +134,7 @@
 
 
             ];
+            events.init(schedule);
     
 
             d.querySelector('.moon').addEventListener('click', () => {
@@ -198,6 +203,11 @@
 
             const getEvents = new ApiController('events/fetch?period=week', events.init);
             getEvents.setAutoRefresh(60000).sendRequest();
+
+            const getAnnounces = new ApiController('announces/current', (data) => {
+                console.log(data)
+            });
+            getAnnounces.sendRequest();
 
             paginations.init();
             setInterval(() => events.openOnTime(), 5000);

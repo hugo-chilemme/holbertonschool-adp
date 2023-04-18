@@ -3,7 +3,7 @@
     flex-direction: column;
     width: calc(100% - 100px);
     height: 100vh;
-    padding: 0 2.5em;
+    padding: 0 1.5em;
 }
 .contains header {
     display:flex;
@@ -44,6 +44,7 @@
     width: 40%;
     height: 100vh;
     display:flex;
+    min-width: 400px;
     justify-content: center;
     flex-direction: column;
 }
@@ -86,8 +87,8 @@
 }
 
 .contains .committers .current-comitter img {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     display:inline-flex;
     margin-right: 25px;
     border-radius: 50px;
@@ -251,5 +252,5 @@
     font-size: 13px;
     display:inline-flex;
     margin-left: 10px;
-    color:var(--text-color)
+    color:var(--title-color)
 }

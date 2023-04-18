@@ -5,8 +5,9 @@ const events = {
 
     lists: {},
 
-    init: (events) => {
-        events.lists = events;
+    init: (events_list) => {
+        events.lists = events_list;
+        events.listView();
     },
 
     nexts: () => {
@@ -45,16 +46,17 @@ const events = {
 
         for (const event of schedule)
         {
+            if ( !event.day.includes( new Date().getDay() ) )
+                continue;
 
             const { title, link } = event;
 
-            const every_day = event.day.length === 5 ? `everyday at ${event.hour}:${event.minute}` : "";
-            const one_day = event.day.length === 1 ? `${days[event.day[0]]} at ${event.hour}:${event.minute}` : "";
+
 
             let html = "";
             html += `<div class="item" onclick="window.open('${event.link}')">`;
             html += '   <div>';
-            html += `       <h4>${every_day}${one_day}</h4>`;
+            html += `       <h4>Today at ${event.hour}:${event.minute}</h4>`;
             html += '   </div>';
             html += '   <div>';
             html += `       <h1>${title} ${event.mandatory ? '<span class="mandatory">Mandatory</span>' : ''}</h1>`;
