@@ -36,10 +36,12 @@ const screen = {
                     {
                         ago = { value: date.getHours(), text: "hour" };
                     }
-                    else if (date.getHours() !== 0) 
+
+                    if (date.getHours() !== 0) 
                     {
                         ago = { value: date.getMinutes(), text: "minute" };
                     }
+                    
                     d.querySelector('.current-comitter date').innerText = ago.value + " " + addPlural(ago.value, ago.text) + " ago";  
 
                   
