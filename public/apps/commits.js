@@ -2,6 +2,7 @@
     const commits = {
 
         sentToDisplay (commit) {
+            
             if (!last_commit || last_commit != commit.ID)
             {
 
