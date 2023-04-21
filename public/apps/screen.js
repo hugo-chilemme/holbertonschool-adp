@@ -28,20 +28,14 @@ const screen = {
                     d.querySelector('.current-comitter .about-committer author').innerText = commit.USER.Pseudo.split(' ')[0]
                     d.querySelector('.current-comitter .about-committer img').src = commit.USER.Avatar;
                     d.querySelector('.current-comitter repo').innerText = commit.REPOSITORY;
-                    setInterval(() => {
-                        
-                        if (last_commit !== commit.ID)
-                        {
-                            return;
-                        }
-                        const date = new Date(new Date() - parseInt(commit.DATETIME));
 
-                        let ago = { value: date.getDate(), text: "day" };
 
-                        if (date.getDate() === new Date().getDate())
+                    const refreshDate = () => {
+                        if (last_commit === commit.ID)
                         {
+                            const date = new Date( new Date(commit.DATETIME).getTime() - new Date().getTime() );
                             ago = { value: date.getHours(), text: "hour" };
-                            if (date.getHours() !== 0) 
+                            if (date.getHours() === 0) 
                             {
                                 ago = { value: date.getMinutes(), text: "minute" };
                                 if (date.getMinutes() === 0) 
@@ -49,11 +43,13 @@ const screen = {
                                     ago = { value: date.getSeconds(), text: "second" };
                                 }
                             }
-                        } 
-
-                        d.querySelector('.current-comitter date').innerText = ago.value + " " + addPlural(ago.value, ago.text) + " ago";  
-
-                    }, 500)
+                            
+    
+                            d.querySelector('.current-comitter date').innerText = ago.value + " " + addPlural(ago.value, ago.text) + " ago";  
+                            setTimeout(() => refreshDate(), 500)
+                        }
+                    }
+                    refreshDate()
 
                   
                 }, 500)
