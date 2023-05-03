@@ -1,0 +1,102 @@
+.app-campus {
+    display:flex;
+    height: 100%;
+    padding: 0 7.5%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.app-campus .container-presentation {
+    width: 60%;
+}
+
+.app-campus .container-selectPreference {
+    width: 40%;
+    height: 100%;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.app-campus .container-selectPreference h3 {
+    font-size: 130%;
+    
+}
+.app-campus .title {
+    color: #2F4858;
+    font-weight: 300;
+    font-size: 250%;
+    width: 100%;
+    min-width: 300px;
+    max-width: 600px;
+    line-height: 5.5rem;
+}
+
+.app-campus .title textgradient {
+    font-weight: 400;
+}
+
+.app-campus .container-selectPreference .campusList {
+    max-height: 400px;
+    overflow-y: auto;
+}
+.app-campus .container-selectPreference .answerCampus {
+    color:#2F4858;
+    margin-bottom: 50px;
+}
+
+.app-campus .container-selectPreference .item {
+    display:flex;
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    background: #f0f0f0;
+    padding:2rem ;
+    transition: background 500ms;
+    font-size: 100%;
+    align-items: center;
+    border-left: 4px solid #f0f0f0;
+    color:#2F4858
+}
+
+.app-campus .container-selectPreference .item i {
+    color:#aaa;
+    transition: 250ms;
+    transform:translateY(1px);
+    font-size: 120%;
+    margin-right: calc(2% + 1.5rem);
+}
+
+.app-campus .container-selectPreference .item i.bx-chevron-right {
+    margin-left: 2%;
+}
+
+.app-campus .container-selectPreference .campusList .item:hover i, 
+.app-campus .container-selectPreference .campusList .item:hover span {
+    background: -webkit-linear-gradient(115deg, #e1003c 70%, #f0c 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.app-campus .container-selectPreference .campusList .item:hover i {
+    margin-left: 4%;
+}
+.app-campus .container-selectPreference .cookie-acceptation {
+    color:#aaa;
+    font-weight: 400;
+    margin-top:25px;
+    line-height: 2rem;
+    font-size: 80%;
+}
+
+
+@media (max-width: 1250px) { 
+    .app-campus {
+        flex-direction: column;
+    }
+    .app-campus .container-selectPreference, .app-campus .container-presentation {
+        width: 100%;
+        height: 100%;
+        padding: 20% 0;
+    }
+}
